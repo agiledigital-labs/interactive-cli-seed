@@ -6,7 +6,7 @@ import del from 'rollup-plugin-delete';
 import cleanup from 'rollup-plugin-cleanup';
 
 const cliConfig = require('./config/cliConfig.json');
-const typeScriptFileMatch = new RegExp(/^[A-z/]+\.ts$/);
+const typeScriptFileMatch = new RegExp(/^[A-z0-9/]+\.ts$/);
 
 /**
  * Deep searches for files within a directory
@@ -40,7 +40,7 @@ const deepDirectorySearch = (fileExtension, localDirectory) => {
       ],
       []
     )
-    .filter((value) => typeScriptFileMatch.test(value));
+    .filter(typeScriptFileMatch.test);
 };
 
 /**
@@ -64,7 +64,7 @@ const scriptConfiguration = (filePath) => ({
   output: {
     file: `dist${filePath.replace('src', '').replace('.ts', '.js')}`,
     format: 'cjs',
-    exports: 'default',
+    exports: 'auto',
   },
   plugins,
 });

@@ -40,7 +40,9 @@ const deepDirectorySearch = (fileExtension, localDirectory) => {
       ],
       []
     )
-    .filter(typeScriptFileMatch.test);
+    .filter((value) => {
+      return typeScriptFileMatch.test(value);
+    });
 };
 
 /**

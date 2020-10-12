@@ -14,7 +14,9 @@ const javaScriptFileMatch = new RegExp(/^[A-z0-9/]+\.js$/);
 const directorySearch = (localDirectory: string) =>
   readdirSync(join(__dirname, localDirectory), { withFileTypes: true })
     .map(({ name }) => name)
-    .filter(javaScriptFileMatch.test);
+    .filter((value) => {
+      return javaScriptFileMatch.test(value);
+    });
 
 /**
  * Add global arguments here using the .option function.

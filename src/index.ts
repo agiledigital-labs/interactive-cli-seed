@@ -8,15 +8,16 @@ import yargs from 'yargs';
  */
 export type RootCommand = typeof rootCommand;
 
-const javaScriptFileMatch = new RegExp(/^[A-z0-9/]+\.js$/);
+const javaScriptFileMatch = new RegExp(/^[A-z0-9/-]+\.js$/);
 
 // Only finds scripts in top level
 const directorySearch = (localDirectory: string) =>
   readdirSync(join(__dirname, localDirectory), { withFileTypes: true })
     .map(({ name }) => name)
-    .filter((value) => {
-      return javaScriptFileMatch.test(value);
-    });
+    .filter((value) => javaScriptFileMatch.test(value))
+    // Weirdness with string concat as path resolves the the ./ and drops it
+    // from the final string
+    .map((name) => `./${join(localDirectory, name)}`);
 
 /**
  * Add global arguments here using the .option function.

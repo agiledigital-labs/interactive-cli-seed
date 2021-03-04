@@ -6,7 +6,7 @@ import del from 'rollup-plugin-delete';
 import cleanup from 'rollup-plugin-cleanup';
 
 const cliConfig = require('./config/cliConfig.json');
-const typeScriptFileMatch = new RegExp(/^[A-z0-9/]+\.ts$/);
+const typeScriptFileMatch = new RegExp(/^[A-z0-9/-]+\.ts$/);
 
 /**
  * Deep searches for files within a directory

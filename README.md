@@ -1,50 +1,49 @@
 # Interactive Cli Seed
 
-This seed project is designed to preloaded with the tools required to develop
-interactive shell environments. It is already configured to compile to
-executable shell files.
+This project is a seed project that has the tools required to develop
+interactive shell environments. It complies with executable shell files for the
+commands.
 
 ## Tooling
 
-It has been configured with Agile Digital's tooling for TypeScript projects.
+The project has Agile Digital's development tooling for TypeScript projects.
 
 ### ESLint
 
-A syntax and logic linter for JavaScript/TypeScript. It has been configured to
-work with eslint-recommended with some overrides.
+A syntax and logic linter for JavaScript/TypeScript. ESlint-recommended with
+some overrides is the currently configured rules.
 
 - no-console: `console.log` has been banned for log observability.
-- unused-imports: This has been enabled to clear out imports that aren't needed
-  as we can't trust the developer will do so
+- unused-imports: This is enabled to clear out imports that aren't needed.
 
 ### Nvmrc
 
-This can set your runtime environment to the correct Node version for this
+Nvmrc can set your runtime environment to the correct Node version for this
 project. Run command `nvm use`.
 
 ### Prettier
 
 Code formatter for any support filed. We use defaults for prettier except for
-requiring single quote.
+requiring a single quote.
 
 ### Rollup
 
-Code packager and compiler. This builds the TypeScript cli tool into a
-executable JavaScript cli tool.
+Code packager and compiler. Rollup builds the TypeScript CLI tool into an
+executable JavaScript CLI tool. The executable file is a node environment.
 
 ## Building a CLI Tool
 
-To use the seed project you will:
+To use the seed project, you will:
 
 1. Install node modules `npm install`
 2. Edit the `config/cliConfig.json` to change the name of the executable file.
-3. Create handlers in the `scripts` directory. Top level only. Sub commands of
-   those need to go into the file themselves or the handler They will need to
-   default export script configuration. This will have your handler in it along
+3. Create handlers in the `scripts` directory. Top-level only. Subcommands of
+   those need to go into the file themselves or the handler. They will need to
+   default export script configuration. This will have your handler in it, along
    with the command metadata.
-4. To create arguments for your tool you can express on the third parameter. By
-   adding in a option function in the middle, you put an argument you may need.
-   See yargs documentation to enhance the customisation cli startup behaviour.
+4. To create arguments, you can express these by the third parameter. By adding
+   in an option function in the middle, you put an argument you may need. See
+   yargs documentation to enhance the customisation CLI startup behaviour.
    > https://github.com/yargs/yargs/blob/master/docs/api.md
 
 ```typescript
@@ -62,9 +61,10 @@ export default ({ command }: RootCommand) =>
   );
 ```
 
-The command function parameters are setup as follows
+The command function parameters are set up as follows
 
-1. `'name'`: Command name. What are you going to call it via. E.g. `seed-project mySubCommand`
+1. `'name'`: Command name. What are you going to call it via. E.g.
+   `seed-project mySubCommand`
 2. `'description'`: Information about what the command does
 3. `(yargs) => yargs`: Use the return `yargs` to specific arguments for this
    command.
@@ -76,9 +76,10 @@ The command function parameters are setup as follows
 
 ### Global Options
 
-To add global options e.g. verbose logging which could be part of all commands,
-you can do this from `index.ts` file. Add these by the standard argument
-approach using yargs. https://github.com/yargs/yargs/blob/master/docs/api.md.
+To add global options, e.g. verbose logging, which could be part of all
+commands, you can do this from the `index.ts` file. Add these by the standard
+argument approach using yargs.
+https://github.com/yargs/yargs/blob/master/docs/api.md.
 
 You need to add arguments to this line:
 
@@ -115,12 +116,12 @@ arguments will not show up.
 
 - **start**: Builds the command in a development mode
 - **build**: Builds a production version of the command
-- **watch**: Build the command in development mode and will watch source
+- **watch**: Build the command in development mode and watch the source
   directory for changes. If changes detected, will rebuild in development mode
 
 ## Known Issues
 
-- External modules (node_modules) are not bundled into cli scripts to make then
-  self contained. Rollup throws an error with an underlying library of yargs.
-  Further investigation will be required to resolve why bundle throws errors on
-  that library.
+- External modules (node_modules) are not bundled into CLI scripts to make them
+  self-contained. Rollup throws an error with an underlying library of yargs.
+  Further investigation will be required to resolve why the bundle throws errors
+  on that library.

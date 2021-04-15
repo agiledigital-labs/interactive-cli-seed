@@ -1,4 +1,5 @@
 {
   "jsxBracketSameLine": true,
-  "singleQuote": true
+  "singleQuote": true,
+  "proseWrap": "always"
 }

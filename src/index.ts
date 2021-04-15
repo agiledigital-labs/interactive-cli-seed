@@ -27,4 +27,4 @@ const rootCommand = yargs;
 
 directorySearch('scripts').map((path) => require(path)(rootCommand));
 
-rootCommand.demandCommand().help().argv;
+rootCommand.demandCommand().strict().help().argv;

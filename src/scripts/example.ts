@@ -1,10 +1,11 @@
 import { RootCommand } from '..';
+import { Argv } from 'yargs';
 
 export default ({ command }: RootCommand) =>
   command(
     'name',
     'description',
-    (yargs) => yargs,
+    (yargs: Argv) => yargs,
     (args) => {
       // Add your code here
     }

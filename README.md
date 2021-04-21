@@ -37,10 +37,12 @@ To use the seed project, you will:
 
 1. Install node modules `npm install`
 2. Edit the `config/cliConfig.json` to change the name of the executable file.
+   The executable file will be available at `./dist/executableName`.
 3. Create handlers in the `scripts` directory. Top-level only. Subcommands of
    those need to go into the file themselves or the handler. They will need to
    default export script configuration. This will have your handler in it, along
-   with the command metadata.
+   with the command metadata. Commands from the handler file can be directly
+   called with `./dist/executableName command argument`.
 4. To create arguments, you can express these by the third parameter. By adding
    in an option function in the middle, you put an argument you may need. See
    yargs documentation to enhance the customisation CLI startup behaviour.
@@ -64,8 +66,8 @@ export default ({ command }: RootCommand) =>
 The command function parameters are set up as follows
 
 1. `'name'`: Command name. What are you going to call it via. E.g.
-   `seed-project mySubCommand`
-2. `'description'`: Information about what the command does
+   `./dist/seed-project mySubCommand`
+2. `'description'`: Information about what the command does.
 3. `(yargs) => yargs`: Use the return `yargs` to specific arguments for this
    command.
    ```typescript

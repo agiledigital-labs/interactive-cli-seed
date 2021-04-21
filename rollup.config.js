@@ -81,7 +81,11 @@ export default [
     },
     plugins: [
       ...plugins,
-      execute(`chmod +x dist/${cliConfig.name}`),
+      ((rollupPlugin) => ({
+        ...rollupPlugin,
+        writeBundle: rollupPlugin.generateBundle,
+        generateBundle: undefined,
+      }))(execute(`chmod +x dist/${cliConfig.name}`)),
       !process.env.ROLLUP_WATCH ? del({ targets: 'dist/**/*' }) : undefined,
     ],
   },

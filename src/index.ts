@@ -23,7 +23,7 @@ const directorySearch = (localDirectory: string) =>
  */
 const rootCommand = yargs;
 
-// Allows to find in any scripts in the scripts folder without explicitly stating in the index file.
+// Allows to retrieve any scripts in the scripts folder without explicitly stating in the index file.
 directorySearch('scripts').map((path) => require(path)(rootCommand));
 
 rootCommand.demandCommand().strict().help().argv;

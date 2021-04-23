@@ -23,7 +23,8 @@ const directorySearch = (localDirectory: string) =>
  */
 const rootCommand = yargs;
 
-// Allows to retrieve any scripts in the scripts folder without explicitly stating in the index file.
+// Allows to configure handlers (any .js file in the scripts directory) with arguments (rootCommand in this case) at runtime.
+// This means the end users of this tool won't have to touch this file, they just have to add their scripts in the scripts folder.
 directorySearch('scripts').map((path) => require(path)(rootCommand));
 
 rootCommand.demandCommand().strict().help().argv;

@@ -8,13 +8,11 @@ import yargs from 'yargs';
  */
 export type RootCommand = typeof rootCommand;
 
-const javaScriptFileMatch = new RegExp(/^[A-z0-9/-]+\.js$/);
-
 // Only finds scripts in top level
 const directorySearch = (localDirectory: string) =>
   readdirSync(join(__dirname, localDirectory), { withFileTypes: true })
     .map(({ name }) => name)
-    .filter((value) => javaScriptFileMatch.test(value))
+    .filter((value) => value.endsWith('.js'))
     // Weirdness with string concat as path resolves the the ./ and drops it
     // from the final string
     .map((name) => `./${join(localDirectory, name)}`);
@@ -25,6 +23,7 @@ const directorySearch = (localDirectory: string) =>
  */
 const rootCommand = yargs;
 
+// Allows to find in any scripts in the scripts folder without explicitly stating in the index file.
 directorySearch('scripts').map((path) => require(path)(rootCommand));
 
 rootCommand.demandCommand().strict().help().argv;

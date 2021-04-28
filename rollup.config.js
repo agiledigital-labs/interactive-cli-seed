@@ -39,9 +39,7 @@ const deepDirectorySearch = (fileExtension, localDirectory) => {
       ],
       []
     )
-    .filter((value) => {
-      return value.endsWith('.ts');
-    });
+    .filter((value) => value.endsWith('.ts'));
 };
 
 /**

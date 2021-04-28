@@ -8,13 +8,11 @@ import yargs from 'yargs';
  */
 export type RootCommand = typeof rootCommand;
 
-const javaScriptFileMatch = new RegExp(/^[A-z0-9/-]+\.js$/);
-
 // Only finds scripts in top level
 const directorySearch = (localDirectory: string) =>
   readdirSync(join(__dirname, localDirectory), { withFileTypes: true })
     .map(({ name }) => name)
-    .filter((value) => javaScriptFileMatch.test(value))
+    .filter((value) => value.endsWith('.js'))
     // Weirdness with string concat as path resolves the the ./ and drops it
     // from the final string
     .map((name) => `./${join(localDirectory, name)}`);
@@ -25,6 +23,8 @@ const directorySearch = (localDirectory: string) =>
  */
 const rootCommand = yargs;
 
+// Allows to configure handlers (any .js file in the scripts directory) with arguments (rootCommand in this case) at runtime.
+// This means the end users of this tool won't have to touch this file, they just have to add their scripts in the scripts folder.
 directorySearch('scripts').map((path) => require(path)(rootCommand));
 
 rootCommand.demandCommand().strict().help().argv;

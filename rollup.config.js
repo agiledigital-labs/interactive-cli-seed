@@ -83,6 +83,9 @@ export default [
       ...plugins,
       ((rollupPlugin) => ({
         ...rollupPlugin,
+        // Moving to a later lifecycle hook as generateBundle has not written
+        // the file disk yet. Removing execution from generateBundle hook and
+        // moved it to the writeBundle hook.
         writeBundle: rollupPlugin.generateBundle,
         generateBundle: undefined,
       }))(execute(`chmod +x dist/${cliConfig.name}`)),

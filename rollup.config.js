@@ -39,9 +39,7 @@ const deepDirectorySearch = (fileExtension, localDirectory) => {
       ],
       []
     )
-    .filter((value) => {
-      return value.endsWith('.ts');
-    });
+    .filter((value) => value.endsWith('.ts'));
 };
 
 /**
@@ -80,7 +78,14 @@ export default [
     },
     plugins: [
       ...plugins,
-      execute(`chmod +x dist/${cliConfig.name}`),
+      ((rollupPlugin) => ({
+        ...rollupPlugin,
+        // Moving to a later lifecycle hook as generateBundle has not written
+        // the file disk yet. Removing execution from generateBundle hook and
+        // moved it to the writeBundle hook.
+        writeBundle: rollupPlugin.generateBundle,
+        generateBundle: undefined,
+      }))(execute(`chmod +x dist/${cliConfig.name}`)),
       !process.env.ROLLUP_WATCH ? del({ targets: 'dist/**/*' }) : undefined,
     ],
   },

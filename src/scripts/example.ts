@@ -7,5 +7,6 @@ export default ({ command }: RootCommand) =>
     (yargs) => yargs,
     (args) => {
       // Add your code here
+      console.info(args);
     }
   );

@@ -4,6 +4,8 @@ This project is a seed project that has the tools required to develop
 interactive shell environments. It complies with executable shell files for the
 commands.
 
+[![CI Status](https://github.com/agiledigital-labs/interactive-cli-seed/actions/workflows/node.js.yml/badge.svg)](https://github.com/agiledigital-labs/interactive-cli-seed/actions/workflows/node.js.yml)
+
 ## Tooling
 
 The project has Agile Digital's development tooling for TypeScript projects.

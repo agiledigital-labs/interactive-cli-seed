@@ -31,7 +31,7 @@ jobs:
     - run: npm audit --audit-level=moderate
     - run: npm run build
     # - run: npm run lint
-    # - run: npm run type-coverage
-    # - run: npm run test
+    - run: npm run type-coverage
+    - run: npm run test
     # - run: npm run codecov
     # - run: npm run mutation-test

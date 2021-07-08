@@ -1,9 +1,15 @@
 {
   "env": {
+    "jest/globals": true,
     "es6": true,
     "node": true
   },
-  "extends": ["plugin:@typescript-eslint/eslint-recommended", "prettier"],
+  "extends": [
+    "typed-fp",
+    "plugin:sonarjs/recommended",
+    "plugin:jest/recommended",
+    "prettier"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -17,7 +23,11 @@
     "@typescript-eslint",
     "eslint-plugin-import",
     "prettier",
-    "unused-imports"
+    "unused-imports",
+    "jest",
+    "sonarjs",
+    "functional",
+    "total-functions"
   ],
   "rules": {
     "prettier/prettier": "error",

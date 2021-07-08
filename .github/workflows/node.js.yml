@@ -32,6 +32,7 @@ jobs:
     - run: npm run build
     # - run: npm run lint
     - run: npm run type-coverage
-    - run: npm run test
+    # FIXME enable these once you've written your first test
+    # - run: npm run test
     # - run: npm run codecov
     # - run: npm run mutation-test

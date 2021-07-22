@@ -32,6 +32,8 @@ jobs:
     - run: npm run build
     - run: npm run lint
     - run: npm run type-coverage
+    - name: validate cli can be invoked
+      run: dist/seed-project --help
     # FIXME enable these once you've written your first test
     # - run: npm run test
     # - run: npm run codecov

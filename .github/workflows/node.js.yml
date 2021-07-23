@@ -18,12 +18,12 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 15.x]
+        node-version: [15.x, 16.x]
 
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci --ignore-scripts
@@ -32,6 +32,8 @@ jobs:
     - run: npm run build
     - run: npm run lint
     - run: npm run type-coverage
+    - name: validate cli can be invoked
+      run: dist/seed-project help
     # FIXME enable these once you've written your first test
     # - run: npm run test
     # - run: npm run codecov

@@ -3,6 +3,8 @@ import { join } from 'path';
 import { readdirSync } from 'fs';
 import del from 'rollup-plugin-delete';
 import cleanup from 'rollup-plugin-cleanup';
+import { spawnSync } from 'child_process';
+
 
 const cliConfig = require('./config/cliConfig.json');
 

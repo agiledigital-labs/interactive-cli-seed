@@ -1,9 +1,10 @@
 import typescript from 'rollup-plugin-typescript2';
 import { join } from 'path';
 import { readdirSync } from 'fs';
-import execute from 'rollup-plugin-execute';
 import del from 'rollup-plugin-delete';
 import cleanup from 'rollup-plugin-cleanup';
+import { spawnSync } from 'child_process';
+
 
 const cliConfig = require('./config/cliConfig.json');
 
@@ -78,14 +79,13 @@ export default [
     },
     plugins: [
       ...plugins,
-      ((rollupPlugin) => ({
-        ...rollupPlugin,
-        // Moving to a later lifecycle hook as generateBundle has not written
-        // the file disk yet. Removing execution from generateBundle hook and
-        // moved it to the writeBundle hook.
-        writeBundle: rollupPlugin.generateBundle,
-        generateBundle: undefined,
-      }))(execute(`chmod +x dist/${cliConfig.name}`)),
+      // add execute permission to the executable
+      {
+        name: 'writeBundle',
+        writeBundle: () => {
+          spawnSync(`chmod`, ['u+x', `dist/${cliConfig.name}`]);
+        }
+      },
       !process.env.ROLLUP_WATCH ? del({ targets: 'dist/**/*' }) : undefined,
     ],
   },

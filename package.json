@@ -27,9 +27,9 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@stryker-mutator/core": "^5.2.1",
-    "@stryker-mutator/jest-runner": "^5.2.1",
-    "@stryker-mutator/typescript-checker": "^5.2.1",
+    "@stryker-mutator/core": "^6.2.3",
+    "@stryker-mutator/jest-runner": "^6.2.3",
+    "@stryker-mutator/typescript-checker": "^6.2.3",
     "@types/clear": "^0.1.1",
     "@types/clui": "^0.3.0",
     "@types/jest": "^26.0.24",

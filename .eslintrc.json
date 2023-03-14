@@ -5,6 +5,7 @@
     "node": true
   },
   "extends": [
+    "agile-digital",
     "typed-fp",
     "plugin:sonarjs/recommended",
     "plugin:jest/recommended",

@@ -18,7 +18,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [15.x, 16.x]
+        # TODO support node 18
+        node-version: [16.x]
 
     steps:
     - uses: actions/checkout@v2

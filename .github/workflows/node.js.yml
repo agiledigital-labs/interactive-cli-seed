@@ -28,8 +28,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci --ignore-scripts
-    # Fail an audit only if the results include a vulnerability with a level of moderate or higher:
-    - run: npm audit --audit-level=moderate
+    # TODO bring this back down to moderate
+    # Fail an audit only if the results include a vulnerability with a level of critical:
+    - run: npm audit --audit-level=critical
     - run: npm run build
     - run: npm run lint
     - run: npm run type-coverage

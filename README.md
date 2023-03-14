@@ -37,7 +37,7 @@ executable JavaScript CLI tool. The executable file is a node environment.
 
 To use the seed project, you will:
 
-1. Install node modules `npm install`
+1. Install node modules `yarn install`
 2. Edit the `config/cliConfig.json` to change the name of the executable file.
    The executable file will be available at `./dist/executableName`.
 3. Create handlers in the `scripts` directory. Top-level only. Subcommands of

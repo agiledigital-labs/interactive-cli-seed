@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [15.x, 16.x]
+        node-version: [15.x, 16.x, 18.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -26,12 +26,12 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci --ignore-scripts
+    - run: yarn install --immutable --ignore-scripts
     # Fail an audit only if the results include a vulnerability with a level of moderate or higher:
-    - run: npm audit --audit-level=moderate
-    - run: npm run build
-    - run: npm run lint
-    - run: npm run type-coverage
+    - run: yarn audit --level moderate
+    - run: yarn build
+    - run: yarn lint
+    - run: yarn type-coverage
     - name: validate cli can be invoked
       run: dist/seed-project help
     # FIXME enable these once you've written your first test

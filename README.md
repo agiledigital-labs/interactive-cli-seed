@@ -42,9 +42,10 @@ To use the seed project, you will:
    The executable file will be available at `./dist/executableName`.
 3. Create handlers in the `scripts` directory. Top-level only. Subcommands of
    those need to go into the file themselves or the handler. They will need to
-   default export script configuration. This will have your handler in it, along
-   with the command metadata. Commands from the handler file can be directly
-   called with `./dist/executableName command argument`.
+   default export script configuration and explicitly imported and initialised 
+   in index.ts. This will have your handler in it, along with the command metadata. 
+   Commands from the handler file can be directly called with 
+   `./dist/executableName command argument`.
 4. To create arguments, you can express these by the third parameter. By adding
    in an option function in the middle, you put an argument you may need. See
    yargs documentation to enhance the customisation CLI startup behaviour.

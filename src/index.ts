@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable functional/no-expression-statement */
-import { readdirSync } from 'fs';
-import { join } from 'path';
+
 import yargs from 'yargs';
+import example from './scripts/example';
 
 /**
  * Dynamic type for global arguments. This needs to be it's own as we use a
@@ -11,24 +11,14 @@ import yargs from 'yargs';
  */
 export type RootCommand = typeof rootCommand;
 
-// Only finds scripts in top level
-const directorySearch = (localDirectory: string): readonly string[] =>
-  readdirSync(join(__dirname, localDirectory), { withFileTypes: true })
-    .map(({ name }) => name)
-    .filter((value) => value.endsWith('.js'))
-    // Weirdness with string concat as path resolves the the ./ and drops it
-    // from the final string
-    .map((name) => `./${join(localDirectory, name)}`);
-
 /**
  * Add global arguments here using the .option function.
  * E.g. const rootCommand = yargs.option('example', {type: 'string'});
  */
 const rootCommand = yargs;
 
-// Allows to configure handlers (any .js file in the scripts directory) with arguments (rootCommand in this case) at runtime.
-// This means the end users of this tool won't have to touch this file, they just have to add their scripts in the scripts folder.
+// End users of this tool will have to import their subcommands, and call it following example subcommand.
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-directorySearch('scripts').map((path) => require(path)(rootCommand));
+example(rootCommand);
 
 rootCommand.demandCommand().strict().help().argv;

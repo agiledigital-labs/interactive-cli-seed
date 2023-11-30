@@ -5,7 +5,6 @@ import del from 'rollup-plugin-delete';
 import cleanup from 'rollup-plugin-cleanup';
 import { spawnSync } from 'child_process';
 
-
 const cliConfig = require('./config/cliConfig.json');
 
 /**
@@ -53,22 +52,6 @@ const plugins = [
   cleanup(),
 ];
 
-/**
- * Config to use for the individual script handlers
- *
- * @param {string} filePath
- * @returns {object} rollup configuration
- */
-const scriptConfiguration = (filePath) => ({
-  input: filePath,
-  output: {
-    file: `dist${filePath.replace('src', '').replace('.ts', '.js')}`,
-    format: 'cjs',
-    exports: 'auto',
-  },
-  plugins,
-});
-
 export default [
   {
     input: 'src/index.ts',
@@ -84,10 +67,9 @@ export default [
         name: 'writeBundle',
         writeBundle: () => {
           spawnSync(`chmod`, ['u+x', `dist/${cliConfig.name}`]);
-        }
+        },
       },
       !process.env.ROLLUP_WATCH ? del({ targets: 'dist/**/*' }) : undefined,
     ],
   },
-  ...deepDirectorySearch('ts', 'src/scripts/').map(scriptConfiguration),
 ];

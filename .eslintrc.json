@@ -45,5 +45,6 @@
         "varsIgnorePattern": "^_"
       }
     ]
-  }
+  },
+  "reportUnusedDisableDirectives": true
 }

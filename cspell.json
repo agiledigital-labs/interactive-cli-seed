@@ -1,0 +1,33 @@
+{
+  "version": "0.2",
+  "language": "en,en-AU",
+  "dictionaries": ["en-gb"],
+  "dictionaryDefinitions": [
+    {
+      "name": "en-gb",
+      "path": "./node_modules/@cspell/dict-en-gb-mit/en_GB.trie.gz"
+    }
+  ],
+  "files": ["src/**/*.ts", "*.md"],
+  "words": [
+    "biome",
+    "watchexec",
+    "commitlint",
+    "depcruise",
+    "knip",
+    "lefthook",
+    "lockfile",
+    "lockfiles",
+    "mise",
+    "noEmit",
+    "nopp",
+    "npq",
+    "osv",
+    "pipefail",
+    "pnpm",
+    "publint",
+    "stryker",
+    "tsgo",
+    "vitest"
+  ]
+}

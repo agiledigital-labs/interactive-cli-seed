@@ -1,0 +1,32 @@
+overrides:
+  # Force all packages to share a single TypeScript 6 installation. Without this,
+  # strictPeerDependencies would fail because tools like typescript-eslint and
+  # @stryker-mutator/typescript-checker declare peer ranges like ">=4.5 <6.0" that
+  # predate TypeScript 6.
+  typescript: "^6.0.3"
+
+# Explicit build-script allowlist (pnpm 11 security feature).
+allowBuilds:
+  esbuild: true
+  lefthook: true
+
+onlyBuiltDependencies:
+  - lefthook
+
+# pnpm-specific settings — kept here rather than .npmrc so npm doesn't warn about unknown keys.
+# pnpm 11 reads these from pnpm-workspace.yaml at the top level (camelCase).
+# enforce minimum package age of 3 days (4320 minutes); pnpm 11+ defaults to 1440 min (24h)
+minimumReleaseAge: 4320
+# block git/tarball/file subdependencies (complements allow-git=none in .npmrc for pnpm)
+blockExoticSubdeps: true
+# fail on unmet peer dependencies rather than silently ignoring them
+strictPeerDependencies: true
+# do not auto-install peer dependencies
+autoInstallPeers: false
+# use hardlinks instead of reflinks/clones; avoids clonefileat syscall
+packageImportMethod: hardlink
+# Prevent indirect-dep bins from being hoisted to node_modules/.bin
+publicHoistPattern: []
+
+minimumReleaseAgeExclude:
+  - "@types/node@26.1.0"

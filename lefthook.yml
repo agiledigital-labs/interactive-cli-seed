@@ -1,0 +1,64 @@
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm commitlint --edit {1}
+
+pre-commit:
+  parallel: true
+  commands:
+    biome-check":
+      glob:
+        - "src/**/*.ts"
+        - "src/**/*.[mc]ts"
+        - "biome.json"
+      run: pnpm biome-check --error-on-warnings {staged_files}
+    spell-check:
+      glob:
+        - "src/**/*.ts"
+        - "src/**/*.[mc]ts"
+        - "*.md"
+        - "cspell.json"
+      run: pnpm spell-check lint --no-progress --cache --cache-location .caches/cspell {staged_files}
+    type-check:
+      glob:
+        - "src/**/*.ts"
+        - "src/**/*.[mc]ts"
+        - "tsconfig.json"
+      run: pnpm type-check
+    test:
+      glob:
+        - "src/**/*.ts"
+        - "src/**/*.[mc]ts"
+        - "vitest.config.ts"
+      run: pnpm test
+    type-coverage:
+      glob:
+        - "src/**/*.ts"
+        - "src/**/*.[mc]ts"
+        - "package.json"
+        - "tsconfig.json"
+      run: pnpm type-coverage
+    dependency-cruiser:
+      glob:
+        - "src/**/*.ts"
+        - "src/**/*.[mc]ts"
+        - ".dependency-cruiser.json"
+      run: pnpm dependency-cruiser
+    knip:
+      glob:
+        - "src/**/*.ts"
+        - "src/**/*.[mc]ts"
+        - "package.json"
+        - "pnpm-lock.yaml"
+        - "knip.json"
+        - "tsconfig.json"
+      run: pnpm knip
+    lockfile-lint:
+      glob:
+        - "package.json"
+        - "pnpm-lock.yaml"
+        - "pnpm-workspace.yaml"
+      run: pnpm lockfile-lint
+    publint:
+      glob: "package.json"
+      run: pnpm publint

@@ -4,129 +4,158 @@ This project is a seed project that has the tools required to develop
 interactive shell environments. It complies with executable shell files for the
 commands.
 
-[![CI Status](https://github.com/agiledigital-labs/interactive-cli-seed/actions/workflows/node.js.yml/badge.svg)](https://github.com/agiledigital-labs/interactive-cli-seed/actions/workflows/node.js.yml)
+[![CI Status](https://github.com/agiledigital-labs/interactive-cli-seed/actions/workflows/node.js.yml/badge.svg)](https://github.com/agiledigital-labs/interactive-cli-seed/actions/workflows/test.yml)
 
 ## Tooling
 
 The project has Agile Digital's development tooling for TypeScript projects.
 
-### ESLint
+### `yargs`
 
-A syntax and logic linter for JavaScript/TypeScript. ESlint-recommended with
-some overrides is the currently configured rules.
+CLI framework that defines commands and parses arguments.
 
-- no-console: `console.log` has been banned for log observability.
-- unused-imports: This is enabled to clear out imports that aren't needed.
+### Biome
 
-### Nvmrc
+Linter and formatter, with rules configured a CLI:
 
-Nvmrc can set your runtime environment to the correct Node version for this
-project. Run command `nvm use`.
+- Secret detection
+- No direct access to `process.env`, encouraging parsing via `yargs` instead
 
-### Prettier
+### `nvm`
 
-Code formatter for any support filed. We use defaults for prettier except for
-requiring a single quote.
+[`.nvmrc`](./.nvmrc) can set your runtime environment to the correct Node
+version for this project. Run command `nvm use`.
 
-### Rollup
+### `tsup`
 
-Code packager and compiler. Rollup builds the TypeScript CLI tool into an
-executable JavaScript CLI tool. The executable file is a node environment.
+Zero-config bundler that uses `esbuild` under the hood.
 
-## Building a CLI Tool
+### `pnpm`
 
-To use the seed project, you will:
+`npm` alternative with improved security, caching and more. Configured to reduce
+the risk of supply-chain attacks via minimum-age requirements and an allowlist
+for post-install scripts.
 
-1. Install node modules `npm install`
-2. Edit the `config/cliConfig.json` to change the name of the executable file.
-   The executable file will be available at `./dist/executableName`.
-3. Create handlers in the `scripts` directory. Top-level only. Subcommands of
-   those need to go into the file themselves or the handler. They will need to
-   default export script configuration and explicitly imported and initialised 
-   in index.ts. This will have your handler in it, along with the command metadata. 
-   Commands from the handler file can be directly called with 
-   `./dist/executableName command argument`.
-4. To create arguments, you can express these by the third parameter. By adding
-   in an option function in the middle, you put an argument you may need. See
-   yargs documentation to enhance the customisation CLI startup behaviour.
-   > https://github.com/yargs/yargs/blob/master/docs/api.md
+## Using the CLI seed
+
+To use the seed project:
+
+1. Set the `cli-name` in `package.json`. If someone installs your CLI, this is
+   how they'll call it.
+2. Define a prefix for environment variables that are referenced by your script
+   in [`src/baseConfig.ts`](./src/baseConfig.ts#L5)
+3. Create handlers in the [`scripts`](./src/scripts) directory, such as the
+   example [`src/scripts/example.ts`](./src/scripts/example.ts)
+4. Define CLI options for a command in e.g.,
+   [`src/scripts/config.ts`](./src/scripts/config.ts) which extends
+   [`src/baseConfig.ts`](./src/baseConfig.ts)
 
 ```typescript
 // Seed Template - scripts/example.ts
-import { RootCommand } from '..';
-
-export default ({ command }: RootCommand) =>
-  command(
-    'name',
-    'description',
-    (yargs) => yargs,
-    (args) => {
-      // Add your code here
-    }
+export default (yargs: RootCommand): Argv<unknown> =>
+  yargs.command(
+    "example",
+    "your example CLI command",
+    exampleConfig,
+    exampleCommand,
   );
 ```
 
 The command function parameters are set up as follows
 
-1. `'name'`: Command name. What are you going to call it via. E.g.
-   `./dist/seed-project mySubCommand`
-2. `'description'`: Information about what the command does.
-3. `(yargs) => yargs`: Use the return `yargs` to specific arguments for this
-   command.
+1. `'example'`: Command name. What are you going to call it via. E.g.
+   `myCli mySubCommand`
+2. `'your example CLI command'`: Information about what the command does.
+3. `exampleConfig`: options for your command. Should extend the
+   [`src/baseConfig.ts`](./src/baseConfig.ts)
+
    ```typescript
-   (yargs) => yargs.option('example', { type: 'string' }),
+   (yargs) => baseConfig(yargs).option('example', { type: 'string' }),
    ```
-4. `(args) => {}`: Write your own code in the braces. The `args` parameter has
-   all the CLI arguments for both local command and global.
 
-### Global Options
+4. `exampleCommand`: The implementation for your command. The `args` parameter
+   has all the CLI arguments for both local command and global.
 
-To add global options, e.g. verbose logging, which could be part of all
-commands, you can do this from the `index.ts` file. Add these by the standard
-argument approach using yargs.
-https://github.com/yargs/yargs/blob/master/docs/api.md.
+   ```typescript
+   const exampleCommand = (args: ExampleConfig) => {
+      // Add your code here
+      console.info("exampleArg:", args.exampleArg);
+    };
+    ```
 
-You need to add arguments to this line:
+## Prerequisites
 
-```typescript
-// Default line
-const rootCommand = yargs;
+1. Install [`node`](https://nodejs.org/en/) for the version in
+   [`.nvmrc`](./.nvmrc) or use [`nvm`](https://github.com/nvm-sh/nvm):
 
-// Adding Arguments
-const rootCommand = yargs.option('example', { type: 'string' });
-```
-
-If you add them to the other yargs line, typing information for the global
-arguments will not show up.
-
-## Included packages
-
-- **clear**: Clear screen on terminal (https://www.npmjs.com/package/clear)
-- **clui**: Create gauges, sparklines, progress lines and spinners
-  (https://www.npmjs.com/package/clui)
-- **color**: Colored text on cli output (https://www.npmjs.com/package/color)
-  <br/>To use colours you will need to import them using a ES6 and ES5 import.
-  There is some weirdless that can't be explain with types.
-  ```typescript
-  // @ts-ignore - Type Defs from Import
-  // eslint-disable-next-line unused-imports/no-unused-imports-ts
-  import colors from 'colors';
-  require('colors');
+  ```sh
+  nvm install && nvm use
   ```
-- **inquirer**: Create interactive prompts
-  (https://www.npmjs.com/package/inquirer)
-- **yargs**: Command line parser (https://www.npmjs.com/package/yargs)
 
-## Commands
+2. Install the [`pnpm`](https://pnpm.io/installation) package manager. One
+   option is [`corepack`](https://nodejs.org/api/corepack.html) for automatic
+   installation, which is an experimental `node` feature that must be enabled
+   using:
 
-- **start**: Builds the command in a development mode
-- **build**: Builds a production version of the command
-- **watch**: Build the command in development mode and watch the source
-  directory for changes. If changes detected, will rebuild in development mode
+  ```sh
+  corepack enable
+  ```
 
-## Known Issues
+## Usage
 
-- External modules (node_modules) are not bundled into CLI scripts to make them
-  self-contained. Rollup throws an error with an underlying library of yargs.
-  Further investigation will be required to resolve why the bundle throws errors
-  on that library.
+1. Install dependencies with [`pnpm`](https://pnpm.io/installation):
+
+  ```sh
+  pnpm i
+  ```
+
+2. Clone the `.env.example`:
+
+   ```sh
+   cp .env.example .env
+   ```
+
+3. Build:
+
+  ```sh
+  pnpm build
+  ```
+
+3. Read the available commands and flags:
+
+  ```sh
+  pnpm start --help
+  ```
+
+4. Run the executable (where `example` is the command to run):
+
+  ```sh
+  pnpm start example
+  ```
+
+## Development
+
+1. Run in watch mode to iterate quickly:
+
+  ```sh
+  pnpm watch
+  ```
+
+2. Note that build and watch do **not** automatically type check. Instead, use
+   your IDE or run:
+
+  ```sh
+  pnpm type-check
+  ```
+
+3. Lint:
+
+  ```sh
+  pnpm lint
+  ```
+
+4. Format:
+
+  ```sh
+  pnpm format
+  ```

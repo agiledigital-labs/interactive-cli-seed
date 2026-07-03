@@ -1,17 +1,18 @@
-import { Argv } from 'yargs';
-import { RootCommand } from '..';
+import type { Argv } from "yargs";
+import type { RootCommand } from "..";
+import { type ExampleConfig, exampleConfig } from "./config";
 
-// eslint-disable-next-line functional/prefer-immutable-types
-export default ({ command }: RootCommand): Argv<unknown> =>
-  command(
-    'name',
-    'description',
-    // eslint-disable-next-line functional/prefer-immutable-types
-    (yargs) => yargs,
-    // eslint-disable-next-line functional/no-return-void, functional/prefer-immutable-types
-    (args) => {
-      // Add your code here
-      // eslint-disable-next-line functional/no-expression-statements
-      console.info(args);
-    },
+/* v8 ignore next -- @preserve */
+const exampleCommand = (args: ExampleConfig) => {
+  // Add your code here
+  console.info("exampleArg:", args.exampleArg);
+};
+
+/* v8 ignore next -- @preserve */
+export default (yargs: RootCommand): Argv<unknown> =>
+  yargs.command(
+    "example",
+    "your example CLI command",
+    exampleConfig,
+    exampleCommand,
   );

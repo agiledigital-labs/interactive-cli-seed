@@ -1,0 +1,124 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": { "includes": ["**", "!!**/dist", "!!*.config.cjs"] },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto",
+    "trailingNewline": true,
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
+    "useEditorconfig": true
+  },
+  "linter": {
+    "rules": {
+      "security": {
+        "noSecrets": "on"
+      },
+      "style": {
+        "noProcessEnv": "on"
+      }
+    },
+    "includes": [
+      "**",
+      "*.*",
+      "**",
+      "!**/dist",
+      "!**/types",
+      "!**/storybook-static",
+      "!**/*module.scss.d.ts",
+      "!**/cssClasses.d.ts",
+      "!**/vite-env.d.ts"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "quoteStyle": "double",
+      "attributePosition": "auto",
+      "bracketSpacing": true
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "noDuplicateClasses": "on",
+        "useSortedAttributes": "on",
+        "useSortedInterfaceMembers": "on",
+        "useSortedProperties": "on"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.{tsx,jsx}"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "on",
+              "options": {
+                "filenameCases": ["camelCase", "PascalCase", "kebab-case"]
+              }
+            },
+            "useExportsLast": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["./*.config.{ts,js,cjs,mjs}"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noProcessEnv": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["./*.cjs", "./*.mjs", "./*.js"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "useStrictMode": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["*.test.{ts,tsx}"],
+      "linter": {
+        "rules": {
+          "style": { "noMagicNumbers": "off", "noNonNullAssertion": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["*.stories.@{ts,tsx}", "*.story.@{ts,tsx}"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useHookAtTopLevel": "off"
+          },
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    }
+  ]
+}

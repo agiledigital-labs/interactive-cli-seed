@@ -2,80 +2,77 @@
   "name": "interactive-cli-seed",
   "version": "1.0.0",
   "description": "Seed project to create interactive CLI tools.",
-  "main": "index.js",
-  "private": "true",
-  "author": {
-    "name": "Sam Murphy",
-    "email": "stmurphy@agiledigital.com.au",
-    "url": "https://agiledigital.com.au"
+  "type": "module",
+  "packageManager": "pnpm@11.5.0",
+  "engines": {
+    "node": "=26",
+    "pnpm": ">=11"
   },
-  "license": "MIT",
+  "main": "src/index.ts",
+  "bin": {
+    "cli-name": "./dist/index.js"
+  },
+  "author": "Agile Digital",
+  "private": true,
+  "files": [
+    "src"
+  ],
+  "license": "UNLICENSED",
   "scripts": {
-    "build": "NODE_ENV=production rollup -c --environment BUILD:production --bundleConfigAsCjs",
-    "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives",
-    "start": "NODE_ENV=development rollup -c --bundleConfigAsCjs",
-    "watch": "npm run start -- -w",
+    "prepare": "lefthook install",
+    "build": "tsup",
+    "start": "node --enable-source-maps dist/index.js",
+    "watch": "tsup --watch",
+    "test": "vitest run --config=vitest.config.ts",
+    "mutation-test": "stryker run",
+    "type-check": "tsc --noEmit",
     "type-coverage": "type-coverage",
-    "test": "jest",
-    "mutation-test": "stryker run"
-  },
-  "dependencies": {
-    "clear": "^0.1.0",
-    "clui": "^0.3.6",
-    "colors": "^1.4.0",
-    "inquirer": "^9.2.13",
-    "yargs": "^17.7.2"
+    "lint": "biome lint",
+    "format": "biome format --write",
+    "biome-ci": "biome ci src/",
+    "biome-check": "biome check",
+    "lockfile-lint": "lockfile-lint --path package-lock.json --type npm --allowed-hosts npm --allowed-schemes https:",
+    "publint": "publint",
+    "knip": "knip --cache",
+    "npq": "npq",
+    "dependency-cruiser": "depcruise --config .dependency-cruiser.json src/",
+    "spell-check": "cspell"
   },
   "devDependencies": {
-    "@stryker-mutator/core": "^8.2.2",
-    "@stryker-mutator/jest-runner": "^8.2.2",
-    "@stryker-mutator/typescript-checker": "^8.2.2",
-    "@types/clear": "^0.1.4",
-    "@types/clui": "^0.3.1",
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.11.14",
-    "@types/yargs": "^17.0.32",
-    "@typescript-eslint/eslint-plugin": "^6.20.0",
-    "@typescript-eslint/parser": "^6.20.0",
-    "eslint": "^8.56.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-typed-fp": "^5.4.0",
-    "eslint-plugin-functional": "^6.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jest": "^27.6.3",
-    "eslint-plugin-jsdoc": "^48.0.4",
-    "eslint-plugin-prettier": "^5.1.3",
-    "eslint-plugin-sonarjs": "^0.23.0",
-    "eslint-plugin-total-functions": "^7.1.0",
-    "eslint-plugin-unused-imports": "^3.0.0",
-    "jest": "^29.7.0",
-    "prettier": "^3.2.4",
-    "rollup": "^4.9.6",
-    "rollup-plugin-cleanup": "^3.2.1",
-    "rollup-plugin-delete": "^2.0.0",
-    "rollup-plugin-typescript2": "^0.36.0",
-    "ts-jest": "^29.1.2",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
-    "type-coverage": "^2.27.1",
-    "typescript": "^5.3.3"
+    "@biomejs/biome": "2.4.16",
+    "@commitlint/cli": "^21.1.0",
+    "@commitlint/config-conventional": "^21.1.0",
+    "@cspell/dict-en-gb-mit": "3.1.24",
+    "@stryker-mutator/core": "9.6.1",
+    "@stryker-mutator/typescript-checker": "9.6.1",
+    "@stryker-mutator/vitest-runner": "9.6.1",
+    "@types/node": "^26.1.0",
+    "@types/yargs": "^17.0.35",
+    "@vitest/coverage-v8": "4.1.9",
+    "cspell": "^10.0.1",
+    "dependency-cruiser": "^18.0.0",
+    "knip": "6.23.0",
+    "lefthook": "^2.1.9",
+    "lockfile-lint": "^5.0.0",
+    "npq": "^3.19.6",
+    "publint": "^0.3.21",
+    "tsup": "^8.5.1",
+    "type-coverage": "2.29.7",
+    "typescript": "^6.0.3",
+    "vitest": "4.1.9"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "yargs": "^18.0.0"
   },
   "typeCoverage": {
     "atLeast": 100,
     "ignoreCatch": false,
     "strict": true,
-    "detail": true
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "collectCoverage": true,
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
+    "detail": true,
+    "updateIfHigher": false,
+    "reportUnusedIgnore": true,
+    "cache": true,
+    "cacheDirectory": ".caches/type-coverage"
   }
 }

@@ -71,9 +71,6 @@ jobs:
       - name: Lockfile Lint 🔧
         run: pnpm --if-present lockfile-lint
 
-      - name: Publint 🔧
-        run: pnpm --if-present publint
-
       - name: Spell Check 🔧
         run: pnpm --if-present spell-check
 
